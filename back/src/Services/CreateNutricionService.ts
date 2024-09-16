@@ -12,8 +12,11 @@ class CreateNutricionService{
             console.log(JSON.stringify(response, null, 2))
 
             if(response.response && response.response.candidates){
-                const jsonText = response.response.candidates[0]?.content.parts[0].text //CARACA ÚTIL
-                return {data:jsonText}
+                const jsonText = response.response.candidates[0]?.content.parts[0].text as string //CARACA ÚTIL
+                //return {data:jsonText}
+                let jsonString = jsonText.replace(/```\w*\n/g, '').replace(/\n```/g, '').trim();
+                let jsonObject = JSON.parse(jsonString)
+                return {data:jsonObject}
             }
 
             return {ok: true}
